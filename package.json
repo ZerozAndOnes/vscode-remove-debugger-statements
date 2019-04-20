@@ -2,7 +2,7 @@
   "name": "remove-debugger-statements",
   "displayName": "Remove Debugger Statements",
   "description": "Finds and Removes 'debugger;' statements",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.32.3"
   },

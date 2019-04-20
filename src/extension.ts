@@ -86,7 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
                   window.showInformationMessage(
                     removedDebuggerStatment
                       ? `Successfully removed debugger statements.`
-                      : `No debugger (i.e., debugger;) statements found.`
+                      : `No debugger statements found.`
                   );
                 },
                 err => {

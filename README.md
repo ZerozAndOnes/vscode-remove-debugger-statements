@@ -1,11 +1,11 @@
 # README
 
-Removes debugger statements from the specified files/folders to be included, while ignore the files/folders to be excluded.
+Removes debugger statements from the specified files/folders to be included, while ignoring the files/folders to be excluded.
 
 - [Requirements](#requirements)
 - [Extension Settings](#extension-settings)
 - [Release Notes](#release-notes)
-  - [0.0.3](#003)
+  - [0.0.4](#004)
   - [0.0.1](#001)
 
 ## Requirements
@@ -23,7 +23,7 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-### 0.0.3
+### 0.0.4
 
 Add shortcut to remove debugger statements. `ctrl+alt+shift+d` on windows/linux and `ctrl+cmd+shift+d` on mac.
 
