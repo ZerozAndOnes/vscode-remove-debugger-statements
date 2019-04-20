@@ -39,14 +39,14 @@
             "**/*.js",
             "**/*.ts"
           ],
-          "description": "Files/Folders from where debugger statements are to be removed. The files are specified using a GlobPattern see https://code.visualstudio.com/api/references/vscode-api#GlobPattern"
+          "description": "Files/Folders from where debugger statements are to be removed. The files/folders are specified using a GlobPattern String see https://code.visualstudio.com/api/references/vscode-api#GlobPattern"
         },
         "remove-debugger-statements.exclude": {
           "type": "array",
           "default": [
             "**/node_modules/**"
           ],
-          "description": "Files/Folders to be excluded when removing debugger statements. The files are specified using a GlobPattern see https://code.visualstudio.com/api/references/vscode-api#GlobPattern"
+          "description": "Files/Folders to be excluded when removing debugger statements. The files/folders are specified using a GlobPattern String see https://code.visualstudio.com/api/references/vscode-api#GlobPattern"
         },
         "remove-debugger-statements.semicolonOptional": {
           "type": "boolean",
