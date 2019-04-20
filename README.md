@@ -22,6 +22,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.0.2
+
+Add shortcut to remove debugger statements. `ctrl+alt+shift+d` on windows/linux and `ctrl+cmd+shift+d` on mac.
+
 ### 0.0.1
 
 Initial release of with configurations of `include`, `exclude`, `semicolonOptional` and `newlineOptional`
