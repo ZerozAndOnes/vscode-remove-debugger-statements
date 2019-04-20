@@ -18,13 +18,18 @@ export function activate(context: vscode.ExtensionContext) {
     () => {
       const { workspace, WorkspaceEdit, window } = vscode;
       // The code you place here will be executed every time your command is executed
-      const includes = ["**/*.js", "**/*.ts"];
-      const excludes = ["**/node_modules/**"];
+
+      const {
+        include,
+        exclude,
+        semicolonOptional,
+        newlineOptional
+      } = Utils.getConfigurations();
 
       workspace
         .findFiles(
-          `{${Utils.arrayToCsv(includes)}}`,
-          `{${Utils.arrayToCsv(excludes)}}`
+          `{${Utils.arrayToCsv(include)}}`,
+          `{${Utils.arrayToCsv(exclude)}}`
         )
         .then(
           (results: vscode.Uri[]) => {
@@ -36,7 +41,13 @@ export function activate(context: vscode.ExtensionContext) {
                     textDocument => {
                       let removed = false;
                       const documentText = textDocument.getText();
-                      let toFindRegex = /^\s*debugger;\s*\n/gim;
+
+                      let toFindRegex = new RegExp(
+                        `^\\s*debugger;${Utils.makeOptionalInRegex(
+                          semicolonOptional
+                        )}\\s*\\n${Utils.makeOptionalInRegex(newlineOptional)}`,
+                        "gim"
+                      );
                       let match;
                       while ((match = toFindRegex.exec(documentText))) {
                         removed = true;

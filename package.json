@@ -28,7 +28,38 @@
         "mac": "ctrl+option+shift+d",
         "when": "editorTextFocus"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Remove Debugger Statements",
+      "properties": {
+        "remove-debugger-statements.include": {
+          "type": "array",
+          "default": [
+            "**/*.js",
+            "**/*.ts"
+          ],
+          "description": "Files/Folders from where debugger statements are to be removed. The files are specified using a GlobPattern see https://code.visualstudio.com/api/references/vscode-api#GlobPattern"
+        },
+        "remove-debugger-statements.exclude": {
+          "type": "array",
+          "default": [
+            "**/node_modules/**"
+          ],
+          "description": "Files/Folders to be excluded when removing debugger statements. The files are specified using a GlobPattern see https://code.visualstudio.com/api/references/vscode-api#GlobPattern"
+        },
+        "remove-debugger-statements.semicolonOptional": {
+          "type": "boolean",
+          "default": false,
+          "description": "If set to true, removes debugger statements with and without ; i.e., (\tdebugger;\t and \tdebugger\t)"
+        },
+        "remove-debugger-statements.newlineOptional": {
+          "type": "boolean",
+          "default": false,
+          "description": "If set to true, removes debugger statements without newlines i.e., the ones that are on the last line of a file"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
