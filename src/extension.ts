@@ -16,14 +16,14 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     "extension.removeDebuggerStatements",
     () => {
-      const { workspace, WorkspaceEdit, window } = vscode;
+      const { workspace, WorkspaceEdit, window, TextEdit } = vscode;
       // The code you place here will be executed every time your command is executed
 
       const {
         include,
         exclude,
         semicolonOptional,
-        newlineOptional
+        removeWhenOnSeparateLineOnly
       } = Utils.getConfigurations();
 
       workspace
@@ -33,6 +33,18 @@ export function activate(context: vscode.ExtensionContext) {
         )
         .then(
           (results: vscode.Uri[]) => {
+            let toFind = `\\s*debugger;${Utils.makeOptionalInRegex(
+              semicolonOptional
+            )}\\s*?\\n*`;
+
+            let separateLineFind = `^${toFind}`;
+
+            let toFindRegex = Utils.regExWithGlobalMultiLineCaseInsensitiveFlags(
+              removeWhenOnSeparateLineOnly
+                ? separateLineFind
+                : `${separateLineFind}|${toFind}`
+            );
+
             let filesToProcess = results.map(result => {
               return new Promise((resolve, reject) => {
                 workspace
@@ -40,33 +52,33 @@ export function activate(context: vscode.ExtensionContext) {
                   .then(
                     textDocument => {
                       let removed = false;
-                      const documentText = textDocument.getText();
-
-                      let toFindRegex = new RegExp(
-                        `^\\s*debugger;${Utils.makeOptionalInRegex(
-                          semicolonOptional
-                        )}\\s*\\n${Utils.makeOptionalInRegex(newlineOptional)}`,
-                        "gim"
-                      );
+                      const workspaceEdit = new WorkspaceEdit();
                       let match;
-                      while ((match = toFindRegex.exec(documentText))) {
+                      let textEdits = [];
+                      while (
+                        (match = toFindRegex.exec(textDocument.getText()))
+                      ) {
                         removed = true;
-                        const workspaceEdit = new WorkspaceEdit();
+
                         const { index } = match;
 
-                        workspaceEdit.replace(
-                          textDocument.uri,
-                          new vscode.Range(
-                            textDocument.positionAt(index),
-                            textDocument.positionAt(index + match[0].length)
-                          ),
-                          ""
+                        textEdits.push(
+                          new TextEdit(
+                            new vscode.Range(
+                              textDocument.positionAt(index),
+                              textDocument.positionAt(index + match[0].length)
+                            ),
+                            ""
+                          )
                         );
-                        workspace
-                          .applyEdit(workspaceEdit)
-                          .then(res => resolve(removed))
-                          .then(undefined, reason => reject(reason));
                       }
+
+                      workspaceEdit.set(textDocument.uri, textEdits);
+
+                      workspace
+                        .applyEdit(workspaceEdit)
+                        .then(res => resolve(removed))
+                        .then(undefined, reason => reject(reason));
                       if (!removed) {
                         resolve(removed);
                       }
