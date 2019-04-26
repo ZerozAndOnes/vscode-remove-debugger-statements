@@ -24,7 +24,10 @@ const Utils = {
     return configurations;
   },
   makeOptionalInRegex(property: boolean) {
-    return property ? "{0,1}" : "";
+    return property ? "*" : "+";
+  },
+  regExWithGlobalMultiLineCaseInsensitiveFlags(regEx: string) {
+    return new RegExp(regEx, "gim");
   }
 };
 
