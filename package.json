@@ -57,10 +57,10 @@
           "default": false,
           "description": "If set to true, removes debugger statements with and without ; i.e., (\tdebugger;\t and \tdebugger\t)"
         },
-        "remove-debugger-statements.newlineOptional": {
+        "remove-debugger-statements.removeWhenOnSeparateLineOnly": {
           "type": "boolean",
           "default": false,
-          "description": "If set to true, removes debugger statements without newlines i.e., the ones that are on the last line of a file"
+          "description": "If set to true, removes only debugger statements that are on a separate line and only have spaces/new lines around them. i.e., statements like constructor(){debugger;} are ignored."
         }
       }
     }
